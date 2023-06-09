@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserForm
 from django.http import HttpResponse
 from .models import User
-
+from django.contrib import messages
 # Create your views here.
 
 
@@ -16,7 +16,7 @@ def registerUser(request):
             # user.set_password(password)
             # user.role=User.CUSTOMER
             # user.save()
-            # return redirect('home')
+          
 
             # Create the user using create_user method 2nd method
             first_name = form.cleaned_data['first_name']
@@ -27,6 +27,8 @@ def registerUser(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
             user.role = User.CUSTOMER
             user.save()
+            messages.success(request, 'Your account has been registered sucessfully!')
+            return redirect('registerUser')
     else:
         form= UserForm()
     context={
