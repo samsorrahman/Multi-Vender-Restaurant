@@ -5,15 +5,18 @@ from .forms import UserForm
 from django.http import HttpResponse
 from .models import User, UserProfile
 from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
 def registerUser(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already logged in!')
+        return redirect('dashboard')
+    elif request.method == 'POST':
         form= UserForm(request.POST)
         if form.is_valid():
             # we can hash password in 2 ways 1st is here
-            # password=form.cleaned_data['password']
             # user= form.save(commit=False)
             # user.set_password(password)
             # user.role=User.CUSTOMER
@@ -42,7 +45,10 @@ def registerUser(request):
 
 
 def registerVendor(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already logged in!')
+        return redirect('dashboard')
+    elif request.method == 'POST':
         # store the data and create the user
         form = UserForm(request.POST)
         v_form = VendorForm(request.POST, request.FILES)
