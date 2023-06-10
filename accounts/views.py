@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from .utils import detectUser
 
 from vendor.forms import VendorForm
 from .forms import UserForm
@@ -88,7 +89,7 @@ def registerVendor(request):
 def login(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
-        return redirect('dashboard')
+        return redirect('myAccount')
     elif request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -98,7 +99,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            return redirect('dashboard')
+            return redirect('myAccount')
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('login')
@@ -110,6 +111,16 @@ def logout(request):
     return redirect('login')
 
 
+@login_required(login_url='login')
+def myAccount(request):
+    user=request.user
+    redirectUrl= detectUser(user)
+    return redirect(redirectUrl)
 
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+@login_required(login_url='login')
+def custDashboard(request):
+    return render(request, 'accounts/custDashboard.html')
+
+@login_required(login_url='login')
+def vendorDashboard(request):
+    return render(request, 'accounts/VendorDashboard.html')
