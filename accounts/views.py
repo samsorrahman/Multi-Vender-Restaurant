@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .utils import detectUser
+from .utils import detectUser, send_verification_email
 
 from vendor.forms import VendorForm
 from .forms import UserForm
@@ -52,6 +52,11 @@ def registerUser(request):
             user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
             user.role = User.CUSTOMER
             user.save()
+            
+            # Email Verification
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
             messages.success(request, 'Your account has been registered sucessfully!')
             return redirect('registerUser')
     else:
@@ -86,6 +91,10 @@ def registerVendor(request):
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()
+            # Email Verification
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
             messages.success(request, 'Your account has been registered sucessfully! Please wait for the approval.')
             return redirect('registerVendor')
         else:
@@ -103,7 +112,23 @@ def registerVendor(request):
     return render(request, 'accounts/registerVendor.html', context)
 
 
+def activate(request, uidb64, token):
+    # Activate the user by setting the is_active status to True
+    # try:
+    #     uid = urlsafe_base64_decode(uidb64).decode()
+    #     user = User._default_manager.get(pk=uid)
+    # except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+    #     user = None
 
+    # if user is not None and default_token_generator.check_token(user, token):
+    #     user.is_active = True
+    #     user.save()
+    #     messages.success(request, 'Congratulation! Your account is activated.')
+    #     return redirect('myAccount')
+    # else:
+    #     messages.error(request, 'Invalid activation link')
+    #     return redirect('myAccount')
+    pass
 
 def login(request):
     if request.user.is_authenticated:
