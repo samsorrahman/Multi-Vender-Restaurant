@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.get_vendor',
+                'accounts.context_processors.get_google_api',
             ],
         },
     },
@@ -151,3 +152,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rahmansamsor82@gmail.com'
 EMAIL_HOST_PASSWORD = 'ahquzaspwlvrcndd'
+
+GOOGLE_API_KEY = 'AIzaSyBR8AF6Gw2fp_hvIPK-xErl5YVFd7agHZM'
