@@ -17,9 +17,25 @@
 						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 							<div class="user-dashboard loader-holder">
 								<h2>Build Your Menu</h2>
-								<!-- My Restaurants Form Start -->
-						
-								<!-- My Restaurants Form End -->
+                                <hr>
+                                <table class="table table-hover table-borderless">
+                                   <h6>Menu Categories</h6>
+                                   <a href="#" class="btn btn-success float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i> Add Food</a>
+                                   <a href="#" class="btn btn-info float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</a>
+                                    <tbody>
+                                        {% for cat in categories %}
+                                        <tr>
+                                          <td class="text-left">{{ forloop.counter }}</td>
+                                          <td class="text-left">
+                                              <a><p class="mb-0 font-weight-bold">{{ cat }}</p>
+                                              <small class="text-muted">{{cat.description}}</small></a>
+                                          </td>
+                                          <td><a style="color:unset;"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp; <a  onclick="return confirm('Are you sure you want to delete this category?')"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td>
+                                        </tr>
+                                      {% endfor %}
+                          
+                                    </tbody>
+                                  </table>
 							</div>
 						</div>
 					</div>
