@@ -53,7 +53,7 @@ def myprofile(request):
 @user_passes_test(check_role_vendor)
 def menu_builder(request):
     vendor = get_vendor(request)
-    categories= Category.objects.filter(vendor=vendor)
+    categories= Category.objects.filter(vendor=vendor).order_by('created_at')
     
     context={
         'categories': categories
@@ -75,7 +75,8 @@ def fooditems_by_category(request, pk=None):
     }
     return render(request, 'vendor/fooditems_by_category.html', context)
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -83,12 +84,12 @@ def add_category(request):
             category_name = form.cleaned_data['category_name']
             category = form.save(commit=False)
             category.vendor = get_vendor(request)
-            
+            category.slug = slugify(category_name)
             category.save() # here the category id will be generated
-            category.slug = slugify(category_name)+'-'+str(category.id) # chicken-15
-            category.save()
+            # category.slug = slugify(category_name)+'-'+str(category.id) # chicken-15
+            # category.save()
             messages.success(request, 'Category added successfully!')
-            return redirect('menu-builder')
+            return redirect('menubuilder')
         else:
             print(form.errors)
 
@@ -99,9 +100,34 @@ def add_category(request):
     }
     return render(request, 'vendor/add_category.html', context)
 
+
+
+
+
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def edit_category(request, pk=None):
-    context={
-        
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            category_name = form.cleaned_data['category_name']
+            category = form.save(commit=False)
+            category.vendor = get_vendor(request)
+            category.slug = slugify(category_name)
+            form.save()
+            messages.success(request, 'Category updated successfully!')
+            return redirect('menu-builder')
+        else:
+            print(form.errors)
+
+    else:
+        form = CategoryForm(instance=category)
+    context = {
+        'form': form,
+        'category': category,
     }
     return render(request, 'vendor/edit_category.html', context)
 
