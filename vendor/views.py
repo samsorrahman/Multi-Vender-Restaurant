@@ -89,7 +89,7 @@ def add_category(request):
             # category.slug = slugify(category_name)+'-'+str(category.id) # chicken-15
             # category.save()
             messages.success(request, 'Category added successfully!')
-            return redirect('menubuilder')
+            return redirect('menu_builder')
         else:
             print(form.errors)
 
