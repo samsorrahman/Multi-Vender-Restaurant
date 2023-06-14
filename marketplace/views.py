@@ -4,6 +4,7 @@ from menu.models import Category, FoodItem
 from vendor.models import Vendor
 from django.db.models import Prefetch
 from .models import Cart
+from .context_processors import get_cart_counter
 # Create your views here.
 
 def marketplace(request):
@@ -50,10 +51,10 @@ def add_to_cart(request, food_id):
                     # Increase the cart quantity
                     chkCart.quantity += 1
                     chkCart.save()
-                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity'})
+                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
                 except:
                     chkCart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
-                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart'})
+                    return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart',  'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
         else:
