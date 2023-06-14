@@ -5,6 +5,7 @@ from vendor.models import Vendor
 from django.db.models import Prefetch
 from .models import Cart
 from .context_processors import get_cart_counter
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def marketplace(request):
@@ -93,5 +94,11 @@ def decrease_cart(request, food_id):
     
     
     
+
+@login_required(login_url = 'login')
 def cart(request):
-    return render(request, 'marketplace/cart.html')
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
+    context = {
+        'cart_items': cart_items,
+    }
+    return render(request, 'marketplace/cart.html', context)
