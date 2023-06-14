@@ -94,9 +94,18 @@ $(document).ready(function(){
             url: url,
             data:data,
             success: function(response){
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+food_id).html(response.qty);
+                if(response.status == 'login_required'){
+                    swal(response.message, '', 'info').then(function(){
+                        window.location = '/accounts/login';
+                    })
+                }else if(response.status == 'Failed'){
+                    swal(response.message, '', 'error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+food_id).html(response.qty);
+
             }
+        }
         })
     })
 
@@ -120,15 +129,17 @@ $(document).ready(function(){
             type: 'GET',
             url: url,
             success: function(response){
-                console.log(response)
-                
-            if(response.status == 'Failed'){
-                console.log(response)
-            }else{
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+food_id).html(response.qty);   
-            }
+                if(response.status == 'login_required'){
+                    swal(response.message, '', 'info').then(function(){
+                        window.location = '/accounts/login';
+                    })
+                }else if(response.status == 'Failed'){
+                    swal(response.message, '', 'error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+food_id).html(response.qty);
         }
+    }
         })
     })
 });
