@@ -30,4 +30,4 @@ def vendor_detail(request, vendor_slug):
 
 
 def add_to_cart(request, food_id):
-    return HttpResponse('response')
+    return HttpResponse(food_id)
