@@ -107,4 +107,28 @@ $(document).ready(function(){
         var qty = $(this).attr('data-qty')
         $('#'+the_id).html(qty)
     })
+
+
+     // decrease cart
+     $('.decrease_cart').on('click', function(e){
+        e.preventDefault();
+        
+        food_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function(response){
+                console.log(response)
+                
+            if(response.status == 'Failed'){
+                console.log(response)
+            }else{
+                $('#cart_counter').html(response.cart_counter['cart_count']);
+                $('#qty-'+food_id).html(response.qty);   
+            }
+        }
+        })
+    })
 });
