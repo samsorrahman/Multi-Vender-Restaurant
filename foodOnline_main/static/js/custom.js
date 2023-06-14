@@ -76,6 +76,7 @@ function onPlaceChanged (){
     }
 
 }
+// Adding Cart
 
 $(document).ready(function(){
     $('.add_to_cart').on('click', function(e){
@@ -93,7 +94,7 @@ $(document).ready(function(){
             url: url,
             data:data,
             success: function(response){
-                alert(response);
+                console.log(response)
             }
         })
     })
