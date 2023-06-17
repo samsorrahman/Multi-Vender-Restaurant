@@ -180,4 +180,14 @@ $(document).ready(function(){
             }
         
     }
+        // Check if the cart is empty
+        function checkEmptyCart(){
+            var cart_counter = document.getElementById('cart_counter').innerHTML
+            if(cart_counter == 0){
+                document.getElementById("empty-cart").style.display = "block";
+            }
+        }
+
+
+        
 });
