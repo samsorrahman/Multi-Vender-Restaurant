@@ -4,6 +4,7 @@ from menu.models import Category, FoodItem
 from vendor.models import Vendor
 from django.db.models import Prefetch
 from .models import Cart
+from django.db.models import Q
 from .context_processors import get_cart_counter, get_cart_amounts
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -126,8 +127,13 @@ def search(request):
     longitude = request.GET['lng']
     radius = request.GET['radius']
     keyword= request.GET['keyword']
-    vendors = Vendor.objects.filter(vendor_name__icontains=keyword, is_approved=True, user__is_active=True)
+    
+    # fetch vendor ids that hs the food item the user is looking for
+    fetch_vendor_by_fooditems = FoodItem.objects.filter(food_title__icontains=keyword, is_available=True).values_list('vendor', flat=True)
+    
+    vendors = Vendor.objects.filter(Q(id__in=fetch_vendor_by_fooditems)| Q(vendor_name__icontains= keyword, is_approved=True, user__is_active=True))
     vendor_count = vendors.count()
+    
     
     context = {
         'vendors': vendors,
