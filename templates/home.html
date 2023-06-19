@@ -157,10 +157,10 @@
 												<span>{{ vendor.user_profile.city }}, {{ vendor.user_profile.state }}, {{ vendor.user_profile.pin_code }}</span>
 												{% endif %}
 		
-												{% comment %} {% if vendor.kms %}
+												{% if vendor.kms %}
 													<br>
 													<span><small><b>{{vendor.kms}} km </b>away</small></span>
-												{% endif %} {% endcomment %}
+												{% endif %} 
 											</div>
 											<div class="list-option">
 												<a href="javascript:void(0);" class="shortlist-btn" data-toggle="modal" data-target="#sign-in">
