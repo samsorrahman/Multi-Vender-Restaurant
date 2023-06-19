@@ -23,6 +23,6 @@ urlpatterns = [
     
     
     # Opening Hour
-    path('opening_hours/', views.opening_hours, name='opening_hours')
-
+    path('opening_hours/', views.opening_hours, name='opening_hours'),
+    path('opening_hours/add/', views.add_opening_hour, name='add_opening_hour'),
 ]

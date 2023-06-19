@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404,redirect
 from accounts.forms import UserProfileForm
 from .forms import VendorForm, OpeningHourForm
@@ -213,5 +214,9 @@ def opening_hours(request):
         'opening_hours': opening_hours,
     }
     return render(request, 'vendor/opening_hours.html', context)
+
+
+def add_opening_hour(request):
+    return HttpResponse('add_opening_hour')
 
 
