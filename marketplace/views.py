@@ -1,7 +1,8 @@
+from datetime import date
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from menu.models import Category, FoodItem
-from vendor.models import Vendor
+from vendor.models import OpeningHour, Vendor
 from django.db.models import Prefetch
 from .models import Cart
 from django.db.models import Q
@@ -31,6 +32,13 @@ def vendor_detail(request, vendor_slug):
             queryset = FoodItem.objects.filter(is_available=True)
         )
     )
+    opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day', 'from_hour')
+     # Check current day's opening hours.
+    today_date = date.today()
+    today = today_date.isoweekday()
+    
+    current_opening_hours = OpeningHour.objects.filter(vendor=vendor, day=today)
+    
     
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
@@ -40,6 +48,8 @@ def vendor_detail(request, vendor_slug):
        'vendor': vendor,
        'categories': categories,
        'cart_items': cart_items,
+       'opening_hours': opening_hours,
+       'current_opening_hours': current_opening_hours,
     }
     return render(request, 'marketplace/vendor_detail.html', context)
 
