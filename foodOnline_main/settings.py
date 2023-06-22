@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'marketplace',
     'django.contrib.gis',
     'customer',
+    'orders',
 ]
 
 MIDDLEWARE = [
