@@ -170,9 +170,16 @@ def search(request):
 
 
 def checkout(request):
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
+    cart_count= cart_items.count()
+    
+    if cart_count <= 0:
+        return redirect('marketplace')
     form= OrderForm()
     
     context={
-        'form': form
+        'form': form,
+        'cart_count': cart_count,
+        'cart_items': cart_items
     }
     return render(request, 'marketplace/checkout.html', context)
