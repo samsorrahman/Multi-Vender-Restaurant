@@ -2,6 +2,7 @@ from datetime import date, datetime
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from menu.models import Category, FoodItem
+from orders.forms import OrderForm
 from vendor.models import OpeningHour, Vendor
 from django.db.models import Prefetch
 from .models import Cart
@@ -169,4 +170,9 @@ def search(request):
 
 
 def checkout(request):
-    return render(request, 'marketplace/checkout.html')
+    form= OrderForm()
+    
+    context={
+        'form': form
+    }
+    return render(request, 'marketplace/checkout.html', context)

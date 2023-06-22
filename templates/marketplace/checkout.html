@@ -15,7 +15,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="tabs-holder horizontal">
                         <ul class="stickynav-tabs nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-shopping-cart text-danger"></i>Cart Items</a></li>
+                            <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-shopping-cart text-danger"></i>Billing Items</a></li>
                             
                         </ul>
                         <div class="tab-content">
@@ -28,6 +28,50 @@
 
                                     <div id="menu-item-list-6272" class="menu-itam-list">
 
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    First Name: {{ form.first_name }}
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    Last Name: {{ form.last_name }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    Phone Number: {{ form.phone }}
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    Email Address: {{ form.email }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12 col-sm-12 col-lg-12">
+                                                    Address: {{ form.address }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    Country: {{ form.country }}
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    State: {{ form.state }}
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    City: {{ form.city }}
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12 col-lg-6">
+                                                    Pin Code: {{ form.pin_code }}
+                                                </div>
+                                            </div>
+
+                               
                                         
                                         
                                         
@@ -88,8 +132,10 @@
                                                 </span>
                                             </li>
 
-                                            <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">PROCEED TO CHECKOUT</a>
+                                            <button type="submit" href="#" class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
                                         </ul>
+                                    </form>
+                                    {% comment %} end form {% endcomment %}
                                     </div>
                                     
                                 </div>
