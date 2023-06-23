@@ -171,7 +171,10 @@
                                                 </label>
                                             </div>
 
-                                            <button type="submit" href="#" class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
+                                            <span class="text-danger" id="payment-method-error"></span>
+                                            <!-- Select payment method -->
+
+                                            <button onclick="return payMethodConfirm();" type="submit" class="btn btn-danger w-100 p-2 mt-3">PLACE ORDER</button>
                                         </ul>
                                     </form>
                                     {% comment %} end form {% endcomment %}
@@ -189,6 +192,28 @@
     </div>
 </div>
 <!-- Main Section End -->
+
+<script>
+    function payMethodConfirm(){
+        var payMethod = $("input[name='payment_method']:checked").val()
+        if(!payMethod){
+            $('#payment-method-error').html("Select Payment Method!");
+            return false;
+        }else{
+            var conf = confirm('You have selected '+payMethod+' as your preferred payment method.\nClick "OK" to continue.')
+            if(conf == true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+    }
+
+    $('input[name=payment_method]').on('change', function(){
+        $('#payment-method-error').html("");
+    })
+</script>
 
 
 
